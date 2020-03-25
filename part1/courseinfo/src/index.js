@@ -12,12 +12,18 @@ const Statistics = ({ good, setGood, neutral, setNeutral, bad, setBad }) => {
       <button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
       <button onClick={() => setBad(bad + 1)}>Bad</button>
       <h1>Statistics</h1>
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
-      <p>All: {good + neutral + bad}</p>
-      <p>Average: {avg ? avg : 0}</p>
-      <p>Positive: {(positive ? positive : 0) * 100} %</p>
+      {good + neutral + bad > 0 ? (
+        <div>
+          <p>Good: {good}</p>
+          <p>Neutral: {neutral}</p>
+          <p>Bad: {bad}</p>
+          <p>All: {good + neutral + bad}</p>
+          <p>Average: {avg ? avg : 0}</p>
+          <p>Positive: {(positive ? positive : 0) * 100} %</p>
+        </div>
+      ) : (
+        <p>No feedback given</p>
+      )}
     </>
   );
 };
