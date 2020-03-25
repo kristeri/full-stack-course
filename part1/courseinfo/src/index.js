@@ -68,12 +68,14 @@ const Statistics = ({ good, setGood, neutral, setNeutral, bad, setBad }) => {
       <h1>Statistics</h1>
       {good + neutral + bad > 0 ? (
         <table>
-          <Statistic text="good" value={good} />
-          <Statistic text="neutral" value={neutral} />
-          <Statistic text="bad" value={bad} />
-          <Statistic text="all" value={good + neutral + bad} />
-          <Statistic text="average" value={avg ? avg : 0} />
-          <Statistic text="positive" value={(positive ? positive : 0) * 100} />
+          <tbody>
+            <Statistic text="good" value={good} />
+            <Statistic text="neutral" value={neutral} />
+            <Statistic text="bad" value={bad} />
+            <Statistic text="all" value={good + neutral + bad} />
+            <Statistic text="average" value={avg ? avg : 0} />
+            <Statistic text="positive" value={(positive ? positive : 0) * 100} />
+          </tbody>
         </table>
       ) : (
         <p>No feedback given</p>
