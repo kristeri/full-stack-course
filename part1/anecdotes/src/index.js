@@ -12,17 +12,21 @@ const App = ({ anecdotes }) => {
   };
 
   const vote = () => {
-    const copy = { ...votes };
+    const copy = [...votes];
     copy[selected] += 1;
     setVotes(copy);
   };
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <p>{anecdotes[selected]}</p>
       <p>Has {votes[selected]} votes.</p>
       <button onClick={() => vote()}>Vote</button>
       <button onClick={() => setSelected(getRandomInt(0, anecdotes.length - 1))}>Next anecdote</button>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[votes.indexOf(Math.max(...votes))]}</p>
+      <p>Has {votes[votes.indexOf(Math.max(...votes))]} votes.</p>
     </div>
   );
 };
