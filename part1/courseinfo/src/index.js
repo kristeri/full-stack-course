@@ -1,6 +1,29 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
+const Button = ({ text, value, fn }) => {
+  return <button onClick={() => fn(value + 1)}>{text}</button>;
+};
+
+const Statistic = ({ text, value }) => {
+  switch (text) {
+    case "good":
+      return <p>Good: {value}</p>;
+    case "neutral":
+      return <p>Neutral: {value}</p>;
+    case "bad":
+      return <p>Bad: {value}</p>;
+    case "all":
+      return <p>All: {value}</p>;
+    case "average":
+      return <p>Average: {value}</p>;
+    case "positive":
+      return <p>Positive: {value} %</p>;
+    default:
+      return null;
+  }
+};
+
 const Statistics = ({ good, setGood, neutral, setNeutral, bad, setBad }) => {
   const avg = (1 * good + 0 * neutral + -1 * bad) / (good + neutral + bad);
   const positive = good / (good + neutral + bad);
@@ -8,18 +31,19 @@ const Statistics = ({ good, setGood, neutral, setNeutral, bad, setBad }) => {
   return (
     <>
       <h1>Give feedback</h1>
-      <button onClick={() => setGood(good + 1)}>Good</button>
-      <button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
-      <button onClick={() => setBad(bad + 1)}>Bad</button>
+      <Button />
+      <Button text={"Good"} value={good} fn={setGood} />
+      <Button text={"Neutral"} value={neutral} fn={setNeutral} />
+      <Button text={"Bad"} value={bad} fn={setBad} />
       <h1>Statistics</h1>
       {good + neutral + bad > 0 ? (
         <div>
-          <p>Good: {good}</p>
-          <p>Neutral: {neutral}</p>
-          <p>Bad: {bad}</p>
-          <p>All: {good + neutral + bad}</p>
-          <p>Average: {avg ? avg : 0}</p>
-          <p>Positive: {(positive ? positive : 0) * 100} %</p>
+          <Statistic text="good" value={good} />
+          <Statistic text="neutral" value={neutral} />
+          <Statistic text="bad" value={bad} />
+          <Statistic text="all" value={good + neutral + bad} />
+          <Statistic text="average" value={avg ? avg : 0} />
+          <Statistic text="positive" value={(positive ? positive : 0) * 100} />
         </div>
       ) : (
         <p>No feedback given</p>
