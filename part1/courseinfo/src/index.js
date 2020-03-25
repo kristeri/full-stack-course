@@ -5,17 +5,21 @@ const Header = ({ course }) => {
   return <h1>{course}</h1>;
 };
 
+const Part = ({ item }) => {
+  return (
+    <p>
+      {item.part} {item.exercises}
+    </p>
+  );
+};
+
 const Content = ({ content }) => {
   return (
-    <>
-      {content.map(item => {
-        return (
-          <p>
-            {item.part} {item.exercises}
-          </p>
-        );
-      })}
-    </>
+    <div>
+      <Part item={content[0]} />
+      <Part item={content[1]} />
+      <Part item={content[2]} />
+    </div>
   );
 };
 
