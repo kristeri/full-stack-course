@@ -1,18 +1,28 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-const App = props => {
+const App = ({ anecdotes }) => {
   const [selected, setSelected] = useState(0);
+  const [votes, setVotes] = useState(Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf, 0));
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
+
+  const vote = () => {
+    const copy = { ...votes };
+    copy[selected] += 1;
+    setVotes(copy);
+  };
+
   return (
     <div>
-      <p>{props.anecdotes[selected]}</p>
-      <button onClick={() => setSelected(getRandomInt(0, props.anecdotes.length - 1))}>Next anecdote</button>
+      <p>{anecdotes[selected]}</p>
+      <p>Has {votes[selected]} votes.</p>
+      <button onClick={() => vote()}>Vote</button>
+      <button onClick={() => setSelected(getRandomInt(0, anecdotes.length - 1))}>Next anecdote</button>
     </div>
   );
 };
