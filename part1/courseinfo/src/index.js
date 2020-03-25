@@ -8,17 +8,47 @@ const Button = ({ text, value, fn }) => {
 const Statistic = ({ text, value }) => {
   switch (text) {
     case "good":
-      return <p>Good: {value}</p>;
+      return (
+        <tr>
+          <td>Good: </td>
+          <td>{value}</td>
+        </tr>
+      );
     case "neutral":
-      return <p>Neutral: {value}</p>;
+      return (
+        <tr>
+          <td>Neutral: </td>
+          <td>{value}</td>
+        </tr>
+      );
     case "bad":
-      return <p>Bad: {value}</p>;
+      return (
+        <tr>
+          <td>Bad: </td>
+          <td>{value}</td>
+        </tr>
+      );
     case "all":
-      return <p>All: {value}</p>;
+      return (
+        <tr>
+          <td>All: </td>
+          <td>{value}</td>
+        </tr>
+      );
     case "average":
-      return <p>Average: {value}</p>;
+      return (
+        <tr>
+          <td>Average: </td>
+          <td>{value}</td>
+        </tr>
+      );
     case "positive":
-      return <p>Positive: {value} %</p>;
+      return (
+        <tr>
+          <td>Positive: </td>
+          <td>{value} %</td>
+        </tr>
+      );
     default:
       return null;
   }
@@ -37,14 +67,14 @@ const Statistics = ({ good, setGood, neutral, setNeutral, bad, setBad }) => {
       <Button text={"Bad"} value={bad} fn={setBad} />
       <h1>Statistics</h1>
       {good + neutral + bad > 0 ? (
-        <div>
+        <table>
           <Statistic text="good" value={good} />
           <Statistic text="neutral" value={neutral} />
           <Statistic text="bad" value={bad} />
           <Statistic text="all" value={good + neutral + bad} />
           <Statistic text="average" value={avg ? avg : 0} />
           <Statistic text="positive" value={(positive ? positive : 0) * 100} />
-        </div>
+        </table>
       ) : (
         <p>No feedback given</p>
       )}
