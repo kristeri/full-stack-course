@@ -4,12 +4,11 @@ import personService from "../services/persons";
 const Persons = ({ persons, setPersons, filter }) => {
   const removePerson = person => {
     if (window.confirm("Delete person " + person.name + "?")) {
-      let copy = [...persons];
-      copy = copy.filter(function(obj) {
-        return obj.id !== person.id;
+      personService.remove(person.id).then(() => {
+        personService.getAll().then(response => {
+          setPersons(response.data);
+        });
       });
-      setPersons(copy);
-      personService.remove(person.id);
     }
   };
 
