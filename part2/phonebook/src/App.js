@@ -25,7 +25,13 @@ const App = () => {
       setPersons(copy);
       personService.create(obj);
     } else {
-      window.alert(`${newName} is already added to phonebook.`);
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        personService.update(persons.find(person => person.name === newName).id, obj).then(() => {
+          personService.getAll().then(response => {
+            setPersons(response.data);
+          });
+        });
+      }
     }
   };
 
