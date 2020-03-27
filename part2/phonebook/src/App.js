@@ -18,7 +18,7 @@ const App = () => {
 
   const addPerson = event => {
     event.preventDefault();
-    const obj = { name: newName, number: newNumber };
+    const obj = { id: persons[persons.length - 1].id + 1, name: newName, number: newNumber };
     if (!persons.some(person => person.name === newName)) {
       const copy = [...persons];
       copy.push(obj);
@@ -36,7 +36,7 @@ const App = () => {
       <PersonForm addPerson={addPerson} setNewName={setNewName} setNewNumber={setNewNumber} />
       <h3>Add a new</h3>
       <h2>Numbers</h2>
-      <Persons persons={persons} filter={filter} />
+      <Persons persons={persons} setPersons={setPersons} filter={filter} />
     </div>
   );
 };
