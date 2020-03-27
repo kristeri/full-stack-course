@@ -6,10 +6,14 @@ const App = () => {
 
   const addPerson = event => {
     event.preventDefault();
-    const copy = [...persons];
     const obj = { name: newName };
-    copy.push(obj);
-    setPersons(copy);
+    if (!persons.some(person => person.name === newName)) {
+      const copy = [...persons];
+      copy.push(obj);
+      setPersons(copy);
+    } else {
+      window.alert(newName + " is already added to phonebook.");
+    }
   };
 
   return (
