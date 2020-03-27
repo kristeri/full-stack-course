@@ -4,7 +4,7 @@ const Persons = ({ persons, filter }) => {
   return (
     <div>
       {persons
-        .filter(person => !person.name.toLowerCase().indexOf(filter.toLowerCase()))
+        .filter(person => person.name.toLowerCase().includes(filter.toLowerCase()))
         .map(person => {
           return (
             <p key={person.name}>
