@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import CountryView from "./components/CountryView";
 
 const App = () => {
   const [countries, setCountries] = useState([]);
@@ -20,18 +21,7 @@ const App = () => {
         ) : (
           <div>
             {countries.map(country => (
-              <div key={country.name}>
-                <h1>{country.name}</h1>
-                <p>capital: {country.capital}</p>
-                <p>population: {country.population}</p>
-                <h2>Languages:</h2>
-                <ul>
-                  {country.languages.map(language => {
-                    return <li>{language.name}</li>;
-                  })}
-                </ul>
-                <img src={country.flag} height={100} width={"auto"} />
-              </div>
+              <CountryView country={country} moreThanOne={countries.length > 1} />
             ))}
           </div>
         )}
