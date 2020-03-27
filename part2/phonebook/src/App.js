@@ -12,7 +12,7 @@ const App = () => {
       copy.push(obj);
       setPersons(copy);
     } else {
-      window.alert(newName + " is already added to phonebook.");
+      window.alert(`${newName} is already added to phonebook.`);
     }
   };
 
