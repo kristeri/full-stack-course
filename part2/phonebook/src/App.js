@@ -23,6 +23,9 @@ const App = () => {
       const copy = [...persons];
       copy.push(obj);
       setPersons(copy);
+      axios.post("http://localhost:3001/persons", obj).then(response => {
+        console.log(response);
+      });
     } else {
       window.alert(`${newName} is already added to phonebook.`);
     }
