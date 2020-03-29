@@ -26,10 +26,6 @@ let persons = [
   }
 ];
 
-app.get("/", (req, res) => {
-  res.send("<h1>Hello World!</h1>");
-});
-
 app.get("/api/persons", (req, res) => {
   res.json(persons);
 });
@@ -63,16 +59,21 @@ const generateId = () => {
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
-  if (!body.content) {
+  if (!body.name) {
     return response.status(400).json({
-      error: "content missing"
+      error: "Name missing"
+    });
+  }
+
+  if (!body.number) {
+    return response.status(400).json({
+      error: "Number missing"
     });
   }
 
   const person = {
-    content: body.content,
-    important: body.important || false,
-    date: new Date(),
+    name: body.name,
+    number: body.number,
     id: generateId()
   };
 
