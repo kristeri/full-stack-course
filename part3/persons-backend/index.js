@@ -62,35 +62,21 @@ app.put("/api/persons/:id", (request, response, next) => {
     .catch(error => next(error));
 });
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const body = request.body;
-
-  if (!body.name) {
-    return response.status(400).json({
-      error: "Name missing."
-    });
-  }
-
-  if (!body.number) {
-    return response.status(400).json({
-      error: "Number missing."
-    });
-  }
-
-  //if (persons.some(person => person.name === body.name)) {
-  //  return response.status(400).json({
-  //    error: "Name must be unique."
-  //  });
-  //}
 
   const person = new Person({
     name: body.name,
     number: body.number
   });
 
-  person.save().then(savedPerson => {
-    response.json(savedPerson.toJSON());
-  });
+  person
+    .save()
+    .then(savedPerson => savedPerson.toJSON())
+    .then(savedAndFormattedPerson => {
+      response.json(savedAndFormattedPerson);
+    })
+    .catch(error => next(error));
 });
 
 const unknownEndpoint = (request, response) => {
@@ -100,10 +86,15 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint);
 
 const errorHandler = (error, request, response, next) => {
-  console.error(error.message);
+  //console.error(error.message);
+  //console.log(error.name);
+
+  if (error.name === "ValidationError") {
+    return response.status(400).send({ error: "Name must be unique." });
+  }
 
   if (error.name === "CastError" && error.kind == "ObjectId") {
-    return response.status(400).send({ error: "malformatted id" });
+    return response.status(400).send({ error: "Malformatted id." });
   }
 
   next(error);
