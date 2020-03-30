@@ -25,12 +25,22 @@ const App = () => {
     if (!persons.some(person => person.name === newName)) {
       const copy = [...persons];
       copy.push(obj);
-      setPersons(copy);
-      personService.create(obj);
-      setErrorMessage(`Added ${newName}.`);
-      setTimeout(() => {
-        setErrorMessage(null);
-      }, 5000);
+      personService
+        .create(obj)
+        .then(() => {
+          setErrorMessage(`Added ${newName}.`);
+          setPersons(copy);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+        })
+        .catch(error => {
+          setIsError(true);
+          setErrorMessage(`Person validation failed: ${JSON.stringify(error.response.data)}.`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
+        });
     } else {
       if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
         personService
