@@ -34,7 +34,7 @@ test("blog post contains id_ as unique identifier property", async () => {
   expect(response.body[0]["_id"]).toBeDefined();
 });
 
-test("a valid blog can be added ", async () => {
+test("a valid blog can be added", async () => {
   const newBlog = {
     title: "Full Stack MOOC",
     author: "Unknown",
@@ -50,6 +50,24 @@ test("a valid blog can be added ", async () => {
 
   const blogsAtEnd = await helper.blogsInDb();
   expect(blogsAtEnd.length).toBe(helper.initialBlogs.length + 1);
+});
+
+test("Likes property defaults to 0 if it is not defined", async () => {
+  const newBlog = {
+    title: "Blog without likes",
+    author: "Unknown",
+    url: "http://localhost:3001/api/blogs"
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+  const blogWithoutLike = blogsAtEnd.find(blog => blog.title === "Blog without likes");
+  expect(blogWithoutLike.likes).toEqual(0);
 });
 
 afterAll(() => {
