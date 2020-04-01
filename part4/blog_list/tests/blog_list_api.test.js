@@ -9,11 +9,10 @@ const Blog = require("../models/blog");
 beforeEach(async () => {
   await Blog.deleteMany({});
 
-  let blogObject = new Blog(helper.initialBlogs[0]);
-  await blogObject.save();
-
-  blogObject = new Blog(helper.initialBlogs[1]);
-  await blogObject.save();
+  for (var i = 0; i < helper.initialBlogs.length; i++) {
+    let blogObject = new Blog(helper.initialBlogs[i]);
+    await blogObject.save();
+  }
 });
 
 test("blogs are returned as json", async () => {
@@ -31,8 +30,26 @@ test("all blogs are returned", async () => {
 
 test("blog post contains id_ as unique identifier property", async () => {
   const response = await api.get("/api/blogs");
-  console.log(response.body[0]);
+
   expect(response.body[0]["_id"]).toBeDefined();
+});
+
+test("a valid blog can be added ", async () => {
+  const newBlog = {
+    title: "Full Stack MOOC",
+    author: "Unknown",
+    url: "http://localhost:3001/api/blogs",
+    likes: 0
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+
+  const blogsAtEnd = await helper.blogsInDb();
+  expect(blogsAtEnd.length).toBe(helper.initialBlogs.length + 1);
 });
 
 afterAll(() => {

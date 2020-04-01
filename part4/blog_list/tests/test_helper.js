@@ -1,6 +1,6 @@
 const Blog = require("../models/blog");
 
-blogs = [
+const initialBlogs = [
   { title: "React patterns", author: "Michael Chan", url: "https://reactpatterns.com/", likes: 7 },
   {
     title: "Go To Statement Considered Harmful",
@@ -19,17 +19,21 @@ blogs = [
   { title: "Type wars", author: "Robert C. Martin", url: "http://blog.cleancoder.com/uncle-bob/2016/05/01/TypeWars.html", likes: 2 }
 ];
 
-const initialBlogs = [
-  {
-    content: "HTML is easy",
-    important: false
-  },
-  {
-    content: "Browser can execute only Javascript",
-    important: true
-  }
-];
+const nonExistingId = async () => {
+  const blog = new Blog({ content: "willremovethissoon" });
+  await blog.save();
+  await blog.remove();
+
+  return blog._id.toString();
+};
+
+const blogsInDb = async () => {
+  const blogs = await Blog.find({});
+  return blogs.map(blog => blog.toJSON());
+};
 
 module.exports = {
-  initialBlogs
+  initialBlogs,
+  nonExistingId,
+  blogsInDb
 };
