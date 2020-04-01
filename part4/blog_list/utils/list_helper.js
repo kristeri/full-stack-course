@@ -19,12 +19,25 @@ const mostBlogs = blogs => {
       authorsWithBlogs[blogs[i].author].blogs += 1;
     }
   }
-  return authorsWithBlogs[Object.keys(authorsWithBlogs).reduce((a, b) => (a.blogs > b.blogs ? a : b))];
+  return Object.values(authorsWithBlogs).reduce((a, b) => (a.blogs > b.blogs ? a : b));
+};
+
+const mostLikes = blogs => {
+  let authorsWithLikes = {};
+  for (var i = 0; i < blogs.length; i++) {
+    if (!authorsWithLikes[blogs[i].author]) {
+      authorsWithLikes[blogs[i].author] = { author: blogs[i].author, likes: blogs[i].likes };
+    } else {
+      authorsWithLikes[blogs[i].author].likes += blogs[i].likes;
+    }
+  }
+  return Object.values(authorsWithLikes).reduce((a, b) => (a.likes > b.likes ? a : b));
 };
 
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 };
