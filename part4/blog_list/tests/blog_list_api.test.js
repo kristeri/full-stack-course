@@ -70,6 +70,18 @@ test("Likes property defaults to 0 if it is not defined", async () => {
   expect(blogWithoutLike.likes).toEqual(0);
 });
 
+test("backend responds with 400 Bad Request if title and url are undefined", async () => {
+  const newBlog = {
+    author: "Unknown",
+    likes: 0
+  };
+
+  await api
+    .post("/api/blogs")
+    .send(newBlog)
+    .expect(400);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
