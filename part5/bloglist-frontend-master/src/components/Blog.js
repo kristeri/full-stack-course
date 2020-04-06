@@ -1,12 +1,12 @@
-import React from "react";
-import Togglable from "./Togglable";
-import blogService from "./../services/blogs";
+import React from 'react';
+import Togglable from './Togglable';
+import blogService from './../services/blogs';
 
 const Blog = ({ blog, blogs, setBlogs, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: "solid",
+    border: 'solid',
     borderWidth: 1,
     marginBottom: 5,
   };

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import Blog from "./components/Blog";
-import Notification from "./components/Notification";
-import Togglable from "./components/Togglable";
-import BlogForm from "./components/BlogForm";
-import blogService from "./services/blogs";
-import loginService from "./services/login";
+import React, { useState, useEffect } from 'react';
+import Blog from './components/Blog';
+import Notification from './components/Notification';
+import Togglable from './components/Togglable';
+import BlogForm from './components/BlogForm';
+import blogService from './services/blogs';
+import loginService from './services/login';
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       setUser(user);
@@ -35,14 +35,14 @@ const App = () => {
         password,
       });
 
-      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
+      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user));
 
       blogService.setToken(user.token);
       setUser(user);
-      setUsername("");
-      setPassword("");
+      setUsername('');
+      setPassword('');
     } catch (exception) {
-      setErrorMessage("Wrong username or password.");
+      setErrorMessage('Wrong username or password.');
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
@@ -50,9 +50,9 @@ const App = () => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedBlogappUser");
-    setUsername("");
-    setPassword("");
+    window.localStorage.removeItem('loggedBlogappUser');
+    setUsername('');
+    setPassword('');
     setBlogs([]);
     setUser(null);
   };
@@ -85,7 +85,7 @@ const App = () => {
   };
 
   const blogForm = () => (
-    <Togglable buttonLabel="New blog" hideButtonLabel={"Cancel"} ref={blogFormRef}>
+    <Togglable buttonLabel="New blog" hideButtonLabel={'Cancel'} ref={blogFormRef}>
       <BlogForm createBlog={addBlog} />
     </Togglable>
   );
