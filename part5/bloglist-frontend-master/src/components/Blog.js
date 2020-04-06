@@ -2,7 +2,7 @@ import React from "react";
 import Togglable from "./Togglable";
 import blogService from "./../services/blogs";
 
-const Blog = ({ blog, blogs, setBlogs }) => {
+const Blog = ({ blog, blogs, setBlogs, user }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -23,6 +23,16 @@ const Blog = ({ blog, blogs, setBlogs }) => {
     });
   };
 
+  const removeBlog = () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
+      blogService.remove(blog._id).then(() => {
+        let blogsAfterDelete = [...blogs];
+        blogsAfterDelete = blogsAfterDelete.filter((item) => item !== blog);
+        setBlogs(blogsAfterDelete);
+      });
+    }
+  };
+
   return (
     <div style={blogStyle}>
       <div>
@@ -34,6 +44,7 @@ const Blog = ({ blog, blogs, setBlogs }) => {
           <span>Likes {blog.likes}</span>
           <button onClick={() => handleLike()}>Like</button>
           <p>{blog.user.name}</p>
+          {user.username === blog.user.username && <button onClick={() => removeBlog()}>Remove</button>}
         </div>
       </Togglable>
     </div>
