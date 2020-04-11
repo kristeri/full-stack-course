@@ -1,19 +1,20 @@
-import React from 'react';
-import Togglable from './Togglable';
-import blogService from './../services/blogs';
+import React, { useState } from "react";
+import blogService from "./../services/blogs";
 
 const Blog = ({ blog, blogs, setBlogs, user }) => {
+  const [visible, setVisible] = useState(false);
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: 'solid',
+    border: "solid",
     borderWidth: 1,
     marginBottom: 5,
   };
 
   const handleLike = () => {
     let updatedBlog = { user: blog.user.id, likes: blog.likes, author: blog.author, title: blog.title, url: blog.url };
-
+    setBlogs([]);
     updatedBlog.likes += 1;
     blogService.update(blog._id, updatedBlog).then((returnedBlog) => {
       let blogCopies = [...blogs];
@@ -34,11 +35,11 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
   };
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} name="blog">
       <div>
         {blog.title} {blog.author}
       </div>
-      <Togglable buttonLabel="View" hideButtonLabel="Hide">
+      {visible && (
         <div>
           <p>{blog.url}</p>
           <span>Likes {blog.likes}</span>
@@ -46,7 +47,8 @@ const Blog = ({ blog, blogs, setBlogs, user }) => {
           <p>{blog.user.name}</p>
           {user.username === blog.user.username && <button onClick={() => removeBlog()}>Remove</button>}
         </div>
-      </Togglable>
+      )}
+      <button onClick={() => setVisible(!visible)}>{visible ? "Hide" : "View"}</button>
     </div>
   );
 };
