@@ -1,6 +1,9 @@
 const initialState = { notificationText: "Initial notification", showNotification: false };
 
+var timeoutID;
+
 export const setNotification = (newNotification, timeInSeconds) => {
+  clearTimeout(timeoutID);
   return async (dispatch) => {
     dispatch({
       type: "CHANGE_NOTIFICATION",
@@ -10,7 +13,7 @@ export const setNotification = (newNotification, timeInSeconds) => {
       type: "TOGGLE_NOTIFICATION",
       data: true,
     });
-    setTimeout(() => {
+    timeoutID = setTimeout(() => {
       dispatch({
         type: "TOGGLE_NOTIFICATION",
         data: false,
